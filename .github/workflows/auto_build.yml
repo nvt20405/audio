@@ -1,0 +1,49 @@
+name: Auto Update Libraries Daily
+
+on:
+  workflow_dispatch: # Cho phép bấm chạy tay để test
+  schedule:
+    - cron: '0 0 * * *' # Chạy tự động vào 00:00 UTC hàng ngày
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Cấp quyền để Bot tự update code vào repo
+      
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Update libs and Build Zip
+        run: |
+          # 1. Cập nhật thư viện mới nhất
+          pip install --upgrade -r requirements.txt --target libs_build
+          
+          # 2. Dọn sạch rác (QUAN TRỌNG ĐỂ GIẢM DUNG LƯỢNG)
+          cd libs_build
+          find . -type d -name "__pycache__" -exec rm -rf {} +
+          find . -type d -name "*.dist-info" -exec rm -rf {} +
+          find . -type d -name "bin" -exec rm -rf {} +
+          
+          # 3. Nén lại
+          zip -r ../libs.zip .
+          cd ..
+          rm -rf libs_build
+          
+          # 4. Ghi ngày giờ update vào file version
+          date +%s > version.txt
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Auto Bot"
+          git config --global user.email "bot@example.com"
+          
+          # Commit file zip và version mới lên Repo
+          git add libs.zip version.txt
+          git commit -m "Daily Auto Update [skip ci]" || echo "No changes"
+          git push
