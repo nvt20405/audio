@@ -24,12 +24,6 @@ jobs:
           # 1. Cập nhật thư viện mới nhất
           pip install --upgrade -r requirements.txt --target libs_build
           
-          # 2. Dọn sạch rác (QUAN TRỌNG ĐỂ GIẢM DUNG LƯỢNG)
-          cd libs_build
-          find . -type d -name "__pycache__" -exec rm -rf {} +
-          find . -type d -name "*.dist-info" -exec rm -rf {} +
-          find . -type d -name "bin" -exec rm -rf {} +
-          
           # 3. Nén lại
           zip -r ../libs.zip .
           cd ..
