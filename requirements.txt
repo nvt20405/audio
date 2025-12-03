@@ -2,3 +2,4 @@ flask
 requests
 pytubefix
 youtube-search-python
+yt-dlp
