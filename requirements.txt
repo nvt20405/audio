@@ -1,5 +1,8 @@
-flask
-requests
-pytubefix
-youtube-search-python
+Flask
 yt-dlp
+python-dotenv
+Flask-Limiter
+Flask-CORS
+Flask-Talisman
+Flask-WTF
+gunicorn
