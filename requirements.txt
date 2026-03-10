@@ -6,3 +6,4 @@ Flask-CORS
 Flask-Talisman
 Flask-WTF
 gunicorn
+requests
