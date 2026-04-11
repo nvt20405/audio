@@ -1,9 +1,4 @@
-Flask
-yt-dlp
-python-dotenv
-Flask-Limiter
-Flask-CORS
-Flask-Talisman
-Flask-WTF
-gunicorn
-requests
+flask>=3.0,<4.0
+pytubefix>=6.0,<7.0
+requests>=2.31,<3.0
+youtube-search-python>=1.6,<2.0
